@@ -23,7 +23,7 @@ public class AddressRepositoryImpl implements AddressRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 addresses.add(
-                        new Address(resultSet.getInt("address_id"),
+                        new Address(resultSet.getInt("id"),
                                 resultSet.getString("city"),
                                 resultSet.getString("state"),
                                 resultSet.getString("pincode"))
@@ -39,13 +39,12 @@ public class AddressRepositoryImpl implements AddressRepository {
     @Override
     public Address findById(int id) {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM address WHERE addressId = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM address WHERE id = ?");
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.wasNull()) {
-                return null;
+            if (resultSet.next()) {
+                return new Address(resultSet.getInt("id"), resultSet.getString("city"), resultSet.getString("state"), resultSet.getString("pincode"));
             }
-            return new Address(resultSet.getInt("addressId"), resultSet.getString("city"), resultSet.getString("state"), resultSet.getString("pincode"));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -53,18 +52,21 @@ public class AddressRepositoryImpl implements AddressRepository {
     }
 
     @Override
-    public void save(Address address) {
+    public int save(Address address) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "INSERT INTO address VALUES (?, ?, ?, ?)"
+                    "INSERT INTO address (city, state, pincode) VALUES (?, ?, ?) RETURNING address_id"
             );
-            preparedStatement.setInt(1, address.getAddressId());
-            preparedStatement.setString(2, address.getCity());
-            preparedStatement.setString(3, address.getState());
-            preparedStatement.setString(4, address.getPincode());
-            preparedStatement.executeUpdate();
+            preparedStatement.setString(1, address.getCity());
+            preparedStatement.setString(2, address.getState());
+            preparedStatement.setString(3, address.getPincode());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("id");
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        return 0;
     }
 }

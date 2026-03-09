@@ -59,11 +59,24 @@ public class StudentRepositoryImpl implements StudentRepository {
     @Override
     public Student getStudentById(int id) {
         try {
-                PreparedStatement statement = connection.prepareStatement(
-                        "SELECT * FROM Students WHERE studentId = ?"
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM Students WHERE studentId = ?"
+            );
+
+            statement.setInt(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return new Student(
+                        resultSet.getInt("studentId"),
+                        resultSet.getInt("rollNumber"),
+                        resultSet.getInt("age"),
+                        resultSet.getString("name"),
+                        resultSet.getInt("addressId")
                 );
-                ResultSet resultSet = statement.executeQuery();
-                return new Student(resultSet.getInt("studentId"), resultSet.getInt("rollNumber"), resultSet.getInt("age"), resultSet.getString("name"));
+            }
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

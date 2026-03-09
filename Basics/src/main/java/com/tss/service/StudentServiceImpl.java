@@ -22,4 +22,11 @@ public class StudentServiceImpl implements StudentService {
     public void addStudent(Student student) {
         studentRepository.addStudent(student);
     }
+
+    @Override
+    public Student getStudent(int id) {
+        return studentRepository.getStudentById(id);
+    }
+
+
 }

@@ -5,6 +5,7 @@ public class Student {
     private int rollNumber;
     private int age;
     private String name;
+    private int addressId;
 
     public Student(int studentId, int rollNumber, int age, String name) {
         this.studentId = studentId;
@@ -17,6 +18,11 @@ public class Student {
         this.rollNumber = rollNumber;
         this.age = age;
         this.name = name;
+    }
+
+    public Student(int studentId, int rollNumber, int age,  String name, int addressId) {
+        this(studentId, rollNumber, age, name);
+        this.addressId = addressId;
     }
 
     public int getStudentId() {
