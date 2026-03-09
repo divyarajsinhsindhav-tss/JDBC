@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface EnrollementService {
     void enrollStudent(Course course, Student student);
-    List<String> getEnrolledStudents(int id);
+    List<Student> getEnrolledStudents(int id);
+    List<Course> getCoursesByStudent(int id);
 }
