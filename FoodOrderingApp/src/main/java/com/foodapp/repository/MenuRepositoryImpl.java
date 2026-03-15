@@ -234,7 +234,7 @@ public class MenuRepositoryImpl implements MenuRepository {
     public FoodItem updateFoodItem(FoodItem foodItem) {
         String sql = """
                 UPDATE food_items
-                SET name = ?, price = ?,
+                SET name = ?, price = ?
                 WHERE id = ? AND is_deleted = false;
                 """;
 
