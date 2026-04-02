@@ -131,23 +131,23 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public List<Order> getAllOrders() {
         String sql = """
-                SELECT o.id, o.total_amount, o.discount_rate, o.final_amount,
-                       o.address, o.status, o.payment_id,
-                       u.id AS customer_id, u.name AS customer_name,
-                       u.email AS customer_email,
-                       c.phone AS customer_phone, c.address AS customer_address,
-                       dp.id AS dp_id, dpu.name AS dp_name, dpu.email AS dp_email,
-                       dp.phone AS dp_phone, dp.status AS dp_status,
-                       p.mode AS payment_mode
-                FROM orders o
-                JOIN users u ON o.customer_id = u.id
-                JOIN customer c ON u.id = c.id
-                LEFT JOIN delivery_partner dp ON o.delivery_partner_id = dp.id
-                LEFT JOIN users dpu ON dp.id = dpu.id
-                LEFT JOIN payment p ON o.payment_id = p.id
-                WHERE o.is_deleted = false
-                ORDER BY o.created_at DESC
-                """;
+            SELECT o.id, o.total_amount, o.discount_rate, o.final_amount,
+                   o.address, o.status, o.payment_id,
+                   u.id AS customer_id, u.name AS customer_name,
+                   u.email AS customer_email,
+                   c.phone AS customer_phone, c.address AS customer_address,
+                   dp.id AS dp_id, dpu.name AS dp_name, dpu.email AS dp_email,
+                   dp.phone AS dp_phone, dp.status AS dp_status,
+                   p.mode AS payment_mode
+            FROM orders o
+            JOIN users u ON o.customer_id = u.id
+            JOIN customer c ON u.id = c.id
+            LEFT JOIN delivery_partner dp ON o.delivery_partner_id = dp.id
+            LEFT JOIN users dpu ON dp.id = dpu.id
+            LEFT JOIN payment p ON o.payment_id = p.id
+            WHERE o.is_deleted = false
+            ORDER BY o.created_at DESC
+            """;
 
         return queryOrders(sql, null, null);
     }
@@ -155,23 +155,23 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public List<Order> getAllOrdersByCustomerId(int id) {
         String sql = """
-                SELECT o.id, o.total_amount, o.discount_rate, o.final_amount,
-                       o.address, o.status, o.payment_id,
-                       u.id AS customer_id, u.name AS customer_name,
-                       u.email AS customer_email,
-                       c.phone AS customer_phone, c.address AS customer_address,
-                       dp.id AS dp_id, dpu.name AS dp_name, dpu.email AS dp_email,
-                       dpu.password AS dp_password, dp.phone AS dp_phone, dp.status AS dp_status,
-                       p.mode AS payment_mode
-                FROM orders o
-                JOIN users u ON o.customer_id = u.id
-                JOIN customer c ON u.id = c.id
-                LEFT JOIN delivery_partner dp ON o.delivery_partner_id = dp.id
-                LEFT JOIN users dpu ON dp.id = dpu.id
-                LEFT JOIN payment p ON o.payment_id = p.id
-                WHERE o.customer_id = ? AND o.is_deleted = false
-                ORDER BY o.created_at DESC
-                """;
+            SELECT o.id, o.total_amount, o.discount_rate, o.final_amount,
+                   o.address, o.status, o.payment_id,
+                   u.id AS customer_id, u.name AS customer_name,
+                   u.email AS customer_email,
+                   c.phone AS customer_phone, c.address AS customer_address,
+                   dp.id AS dp_id, dpu.name AS dp_name, dpu.email AS dp_email,
+                   dp.phone AS dp_phone, dp.status AS dp_status,
+                   p.mode AS payment_mode
+            FROM orders o
+            JOIN users u ON o.customer_id = u.id
+            JOIN customer c ON u.id = c.id
+            LEFT JOIN delivery_partner dp ON o.delivery_partner_id = dp.id
+            LEFT JOIN users dpu ON dp.id = dpu.id
+            LEFT JOIN payment p ON o.payment_id = p.id
+            WHERE o.customer_id = ? AND o.is_deleted = false
+            ORDER BY o.created_at DESC
+            """;
 
         return queryOrders(sql, id, null);
     }
@@ -179,22 +179,23 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public List<Order> getAllOrdersByDeliveryPartnerId(int id) {
         String sql = """
-                SELECT o.id, o.total_amount, o.discount_rate, o.final_amount,
-                       o.address, o.status, o.payment_id,
-                       u.id AS customer_id, u.name AS customer_name,
-                       u.email AS customer_email,
-                       c.phone AS customer_phone, c.address AS customer_address,
-                       dp.id AS dp_id, dpu.name AS dp_name, dpu.email AS dp_email, dp.phone AS dp_phone, dp.status AS dp_status,
-                       p.mode AS payment_mode
-                FROM orders o
-                JOIN users u ON o.customer_id = u.id
-                JOIN customer c ON u.id = c.id
-                LEFT JOIN delivery_partner dp ON o.delivery_partner_id = dp.id
-                LEFT JOIN users dpu ON dp.id = dpu.id
-                LEFT JOIN payment p ON o.payment_id = p.id
-                WHERE o.delivery_partner_id = ? AND o.is_deleted = false
-                ORDER BY o.created_at DESC
-                """;
+            SELECT o.id, o.total_amount, o.discount_rate, o.final_amount,
+                   o.address, o.status, o.payment_id,
+                   u.id AS customer_id, u.name AS customer_name,
+                   u.email AS customer_email,
+                   c.phone AS customer_phone, c.address AS customer_address,
+                   dp.id AS dp_id, dpu.name AS dp_name, dpu.email AS dp_email,
+                   dp.phone AS dp_phone, dp.status AS dp_status,
+                   p.mode AS payment_mode
+            FROM orders o
+            JOIN users u ON o.customer_id = u.id
+            JOIN customer c ON u.id = c.id
+            LEFT JOIN delivery_partner dp ON o.delivery_partner_id = dp.id
+            LEFT JOIN users dpu ON dp.id = dpu.id
+            LEFT JOIN payment p ON o.payment_id = p.id
+            WHERE o.delivery_partner_id = ? AND o.is_deleted = false
+            ORDER BY o.created_at DESC
+            """;
 
         return queryOrders(sql, id, null);
     }
@@ -202,23 +203,23 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public List<Order> getOrdersByStatus(OrderStatus status) {
         String sql = """
-                SELECT o.id, o.total_amount, o.discount_rate, o.final_amount,
-                       o.address, o.status, o.payment_id,
-                       u.id AS customer_id, u.name AS customer_name,
-                       u.email AS customer_email,
-                       c.phone AS customer_phone, c.address AS customer_address,
-                       dp.id AS dp_id, dpu.name AS dp_name, dpu.email AS dp_email,
-                       dpu.password AS dp_password, dp.phone AS dp_phone, dp.status AS dp_status,
-                       p.mode AS payment_mode
-                FROM orders o
-                JOIN users u ON o.customer_id = u.id
-                JOIN customer c ON u.id = c.id
-                LEFT JOIN delivery_partner dp ON o.delivery_partner_id = dp.id
-                LEFT JOIN users dpu ON dp.id = dpu.id
-                LEFT JOIN payment p ON o.payment_id = p.id
-                WHERE o.status = ?::order_status AND o.is_deleted = false
-                ORDER BY o.created_at DESC
-                """;
+            SELECT o.id, o.total_amount, o.discount_rate, o.final_amount,
+                   o.address, o.status, o.payment_id,
+                   u.id AS customer_id, u.name AS customer_name,
+                   u.email AS customer_email,
+                   c.phone AS customer_phone, c.address AS customer_address,
+                   dp.id AS dp_id, dpu.name AS dp_name, dpu.email AS dp_email,
+                   dp.phone AS dp_phone, dp.status AS dp_status,
+                   p.mode AS payment_mode
+            FROM orders o
+            JOIN users u ON o.customer_id = u.id
+            JOIN customer c ON u.id = c.id
+            LEFT JOIN delivery_partner dp ON o.delivery_partner_id = dp.id
+            LEFT JOIN users dpu ON dp.id = dpu.id
+            LEFT JOIN payment p ON o.payment_id = p.id
+            WHERE o.status = ?::order_status AND o.is_deleted = false
+            ORDER BY o.created_at DESC
+            """;
 
         return queryOrders(sql, null, status);
     }
@@ -252,31 +253,32 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     private Order mapToOrder(ResultSet rs) throws SQLException {
-        // Map customer
+
         Customer customer = new Customer(
                 rs.getInt("customer_id"),
                 rs.getString("customer_name"),
                 rs.getString("customer_email"),
-                null,  // password not needed here
+                null,
                 rs.getString("customer_phone"),
                 rs.getString("customer_address")
         );
 
-        // Map delivery partner (nullable)
         DeliveryPartner deliveryPartner = null;
         int dpId = rs.getInt("dp_id");
+
         if (!rs.wasNull()) {
             deliveryPartner = new DeliveryPartner(
                     dpId,
                     rs.getString("dp_name"),
                     rs.getString("dp_email"),
-                    rs.getString("dp_password"),
+                    null,
                     rs.getString("dp_phone")
             );
-            deliveryPartner.setStatus(DeliveryPartnerStatus.valueOf(rs.getString("dp_status")));
+            deliveryPartner.setStatus(
+                    DeliveryPartnerStatus.valueOf(rs.getString("dp_status"))
+            );
         }
 
-        // Map payment mode (nullable — payment row may not exist for very old orders)
         PaymentMode paymentMode = null;
         String modeStr = rs.getString("payment_mode");
         if (modeStr != null) {
@@ -285,7 +287,7 @@ public class OrderRepositoryImpl implements OrderRepository {
 
         Order order = new Order(
                 rs.getInt("id"),
-                new ArrayList<>(),   // items fetched separately
+                new ArrayList<>(),
                 customer,
                 rs.getDouble("total_amount"),
                 rs.getDouble("discount_rate"),

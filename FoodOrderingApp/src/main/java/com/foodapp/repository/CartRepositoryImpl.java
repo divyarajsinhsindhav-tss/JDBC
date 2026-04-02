@@ -186,11 +186,6 @@ public class CartRepositoryImpl implements CartRepository {
     }
 
     @Override
-    public void removeFromCart(Integer customerId, OrderItem orderItem) {
-        removeCartItem(customerId, orderItem.getId());
-    }
-
-    @Override
     public void removeCartItem(Integer customerId, Integer orderItemId) {
         try {
             int cartId = getOrCreateCartId(customerId);

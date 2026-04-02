@@ -45,9 +45,7 @@ public class DiscountService {
         return discountRepository.getAllDiscounts();
     }
 
-    /**
-     * Returns the discount rate (%) to apply on the given order amount.Returns 0 if no active discount exists or is found.
-     */
+     //Returns the discount rate (%) to apply on the given order amount.Returns 0 if no active discount exists or is found.
     public double applyDiscount(double orderAmount) {
         List<Discount> activeDiscounts = discountRepository.getActiveDiscounts();
         if (activeDiscounts == null || activeDiscounts.isEmpty()) {
@@ -58,12 +56,16 @@ public class DiscountService {
         double minDiscountAmount = Double.MAX_VALUE;
 
         for (Discount d : activeDiscounts) {
+
             if (orderAmount >= d.getDiscountOn()) {
+
                 double discountAmount = orderAmount * (d.getDiscountRate() / 100.0);
+
                 if (discountAmount < minDiscountAmount) {
                     minDiscountAmount = discountAmount;
                     mostProfitableForAdmin = d;
                 }
+
             }
         }
 

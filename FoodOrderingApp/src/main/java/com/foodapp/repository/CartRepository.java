@@ -8,7 +8,6 @@ import java.util.Map;
 public interface CartRepository {
     Map<Integer, List<OrderItem>> getCart();
     void addToCart(Integer customerId, OrderItem orderItem);
-    void removeFromCart(Integer customerId, OrderItem orderItem);
     void clearCart(Integer customerId);
     List<OrderItem> getCart(Integer customerId);
     OrderItem getCartItem(Integer customerId, Integer orderId);

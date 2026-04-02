@@ -62,7 +62,8 @@ public class MenuRepositoryImpl implements MenuRepository {
             int childId  = entry.getKey();
             int parentId = entry.getValue();
 
-            if (childId == 0) continue; // root itself — skip
+            if (childId == 0)
+                continue; // root itself — skip
 
             MenuCategory child  = categoryMap.get(childId);
 
